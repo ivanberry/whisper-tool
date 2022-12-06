@@ -1,7 +1,7 @@
 FROM python:3.8
 WORKDIR /usr/app
 
-RUN pip install git+https://github.com/openai/whisper.git 
+# RUN pip install git+https://github.com/openai/whisper.git 
 
 COPY ./requirements.txt ./
 
