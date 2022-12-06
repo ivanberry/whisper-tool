@@ -6,14 +6,13 @@ import whisper
 
 
 def prediction(audio):
-    print(audio)
     model = whisper.load_model("base")
     result = model.transcribe(audio)
     return result
 
 
 app = Flask(__name__)
-app.secret_key = "super secret key"
+app.secret_key = "d2hhdCBmdWNrIG9mIHRoaXMgdG9waWMgZGlkIHVyIGxpa2U/"
 app.config['UPLOAD_FOLDER'] = './tmp'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 
