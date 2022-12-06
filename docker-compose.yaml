@@ -8,3 +8,6 @@ services:
       - '8086:8080'
     networks:
       - ml-net
+
+networks:
+  ml-net:
