@@ -28,3 +28,4 @@ werkzeug==2.2.2
     #   flask
 zipp==3.11.0
     # via importlib-metadata
+git+https://github.com/openai/whisper.git 
