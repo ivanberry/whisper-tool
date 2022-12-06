@@ -5,6 +5,8 @@ COPY ./requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pip install waitress
+
 COPY ./ ./
 
-CMD ['waitress-serve' '--host', '127.0.0.1', 'app:app']
+CMD ["python", "app.py"]
