@@ -37,7 +37,7 @@ export default function Home() {
   })
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container + ' text-center'}>
       <Head>
         <title>Best transcibe audio to text</title>
         <meta name="description" content="Best transcibe audio to text" />
