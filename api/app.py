@@ -12,7 +12,7 @@ def prediction(audio):
 
 app = Flask(__name__)
 app.secret_key = "d2hhdCBmdWNrIG9mIHRoaXMgdG9waWMgZGlkIHVyIGxpa2U/"
-app.config['UPLOAD_FOLDER'] = './tmp'
+app.config['UPLOAD_FOLDER'] = './api/tmp'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 
 
