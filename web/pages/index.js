@@ -39,13 +39,13 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
-        <meta name="description" content="Transcibe with Whisper" />
+        <title>Best transcibe audio to text</title>
+        <meta name="description" content="Best transcibe audio to text" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className={styles.title}>
-        New Generation of AI transcribe
+      <h1 className={styles.title + ' text-3xl'}>
+       新世代AI音频转化器
       </h1>
 
       <main className={styles.main}>
@@ -56,16 +56,13 @@ export default function Home() {
           <input {...getInputProps()} />
           {
             isDragActive ?
-              <p className={styles.absoluteCenter + ' text-xl'}>Drop the files here ...</p> :
-              <p className={styles.absoluteCenter + ' text-xl'}>拖拽或点击上传</p>
+              <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>松掉鼠标,我就开始上传啰</p> :
+              <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>拖拽或点击上传</p>
           }
         </section>
 
         <section className={styles.results + ' border-2 border-grey'}>
-          <h2>结果区域</h2>
-          <p>
-            {data ? data.text : null}
-          </p>
+          {data ? data.text : <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>文本会处理到这里哟</p>}
         </section>
       </main>
     </div>

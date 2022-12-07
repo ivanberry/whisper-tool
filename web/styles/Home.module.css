@@ -5,6 +5,7 @@
 .main {
   min-height: 100vh;
   padding: 4rem 0;
+  padding-top: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
@@ -12,6 +13,11 @@
   row-gap: 20px;
   column-gap: 20px;
   text-align: center;
+}
+
+.title {
+  height: 60px;
+  line-height: 60px;
 }
 
 .absoluteCenter {
@@ -32,4 +38,5 @@
 
 .results {
   grid-area: right-results;
+  position: relative;
 }
