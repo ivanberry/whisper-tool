@@ -2,10 +2,18 @@ version: '3.8'
 
 services:
   whisper:
-    build: .
-    container_name: whisper-demo
+    build: ./api
+    container_name: whisper-api
     ports:
       - '8086:8080'
+    networks:
+      - ml-net
+  
+  web:
+    build: ./web
+    container_name: whisper-web
+    ports:
+      - '8082:8081'
     networks:
       - ml-net
 
