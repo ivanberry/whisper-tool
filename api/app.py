@@ -4,7 +4,6 @@ import os
 
 import whisper
 
-
 def prediction(audio):
     model = whisper.load_model("base")
     result = model.transcribe(audio)
@@ -37,7 +36,8 @@ def transcribe():
         if 'file' not in request.files:
             flash('No file part')
             return {
-                'success': False
+                'success': False,
+                'msg': 'No file part'
             }
         file = request.files['file']
         # If the user does not select a file, the browser submits an
@@ -45,12 +45,13 @@ def transcribe():
         if file.filename == '':
             flash('No selected file')
             return {
-                'success': False
+                'success': False,
+                'msg': 'No filename'
             }
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            print(os.path)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # return redirect(url_for('download_file', name=filename))
             prections = prediction(os.path.join(
                 app.config['UPLOAD_FOLDER'], filename))
             return {
@@ -65,4 +66,4 @@ def transcribe():
 
 if __name__ == "__main__":
   from waitress import serve
-  serve(app, host="0.0.0.0", port=8080)
+  serve(app, host="0.0.0.0", port=8081)
