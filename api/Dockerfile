@@ -1,17 +1,18 @@
-FROM jrottenberg/ffmpeg
+FROM ubuntu:20.04
 
 WORKDIR /usr/app
 
-RUN sudo apt-get update -y
-RUN sudo apt-get install -y python
+RUN apt-get update && apt-get install -y software-properties-common gcc && \
+    add-apt-repository -y ppa:deadsnakes/ppa
 
-
-# RUN pip install git+https://github.com/openai/whisper.git 
+RUN apt-get update && apt-get install -y python3.6 python3-distutils python3-pip python3-apt && apt-get install -y git && apt-get install -y --no-install-recommends ffmpeg 
 
 COPY ./requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN mkdir tmp
+
 COPY ./ ./
 
-CMD ["python", "app.py"]
+CMD ["python3", "app.py"]
