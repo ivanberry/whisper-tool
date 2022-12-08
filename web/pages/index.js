@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useCallback, useState } from 'react'
+import { signIn, signOut, useSession } from "next-auth/react"
 
 import { useDropzone } from 'react-dropzone'
 
@@ -9,6 +10,7 @@ export default function Home() {
 
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
+  const { data: session } = useSession()
 
   const onDrop = useCallback(acceptedFiles => {
 
@@ -17,7 +19,7 @@ export default function Home() {
       formData.append('file', file)
       console.log('post data: ', formData)
       setLoading(true)
-      fetch('/api/transcribe', {
+      fetch('/p/api/transcribe', {
         method: 'POST',
         body: formData
       })
@@ -36,6 +38,14 @@ export default function Home() {
     maxSize: 16 * 1000 * 1000
   })
 
+  const handleClick = async () => {
+    signIn()
+  }
+
+  const handleLogout = () => {
+    signOut();
+  }
+
   return (
     <div className={styles.container + ' text-center'}>
       <Head>
@@ -44,9 +54,19 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className={styles.title + ' text-3xl'}>
-       新世代AI音频转化器
-      </h1>
+      <header className='flex justify-between items-center'>
+        <h1 className={styles.title + ' text-3xl'}>
+          新世代AI音频转化器
+        </h1>
+        {session ?
+          <div className='flex justify-around items-center min-w-[200px]'>
+            <img className='rounded-full' width={30} height={30} src={session.user.image} alt="userImage" />
+            <span className='m-2 p-1 border-[1px] border-solid border-slate-300'>{session.user.name}</span>
+            <span className='p-1 border-[1px] border-solid border-slate-300' onClick={handleLogout}>Logout</span>
+          </div>
+          :
+          <button onClick={handleClick}>Login</button>}
+      </header>
 
       <main className={styles.main}>
         <section className={styles.options + ' ' + 'border-2 border-grey hidden'}>
