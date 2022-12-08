@@ -7,9 +7,11 @@ WORKDIR /app
 COPY . .
 
 RUN npm ci
+RUN npm run build
+
 EXPOSE 3000
 
-CMD ["npm", "run", "build-prd"]
+CMD ["npm", "run", "start"]
 
 #
 # FROM nginx as production
