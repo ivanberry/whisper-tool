@@ -11,7 +11,10 @@ export default function Home() {
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
   const [filepath, setFilepath] = useState('')
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+
+
+  console.log('status: ', status, data, session)
 
   const onDrop = useCallback(acceptedFiles => {
 

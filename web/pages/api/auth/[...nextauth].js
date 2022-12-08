@@ -9,18 +9,6 @@ export const authOptions = {
       checks: 'none'
     })
   ],
-  callbacks: {
-    async jwt({token}) {
-      token.userRole = 'admin'
-      return token
-    },
-    session: async ({ session, user, token }) => {
-      if (session?.user) {
-        session.user.id = user.id;
-      }
-      return session;
-    }
-  },
   debug: true
 }
 export default NextAuth(authOptions)
