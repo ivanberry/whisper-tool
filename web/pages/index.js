@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { signIn, signOut, useSession } from "next-auth/react"
 
 import { useDropzone } from 'react-dropzone'
@@ -13,8 +13,9 @@ export default function Home() {
   const [filepath, setFilepath] = useState('')
   const { data: session, status } = useSession()
 
-
-  console.log('status: ', status, data, session)
+  useEffect(() => {
+    console.log('status: ', status, data, session)
+  }, [])
 
   const onDrop = useCallback(acceptedFiles => {
 
