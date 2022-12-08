@@ -10,15 +10,16 @@ export default function Home() {
 
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
+  const [filepath, setFilepath] = useState('')
   const { data: session } = useSession()
 
   const onDrop = useCallback(acceptedFiles => {
 
     acceptedFiles.forEach((file) => {
+      setFilepath(file.path)
+      setLoading(true)
       const formData = new FormData();
       formData.append('file', file)
-      console.log('post data: ', formData)
-      setLoading(true)
       fetch('/p/api/transcribe', {
         method: 'POST',
         body: formData
@@ -46,6 +47,18 @@ export default function Home() {
     signOut();
   }
 
+  const handleFileDownload = () => {
+    // pass download file from server
+    // how to connect with the file
+    // some id?
+    // md5 checksum
+  }
+
+  const handleFileRemove = (e) => {
+    e.stopPropagation()
+    setFilepath('')
+  }
+
   return (
     <div className={styles.container + ' text-center'}>
       <Head>
@@ -65,11 +78,11 @@ export default function Home() {
             <span className='p-1 border-[1px] border-solid border-slate-300' onClick={handleLogout}>Logout</span>
           </div>
           :
-          <button onClick={handleClick}>Login</button>}
+          <button onClick={handleClick}>Sign In</button>}
       </header>
 
       <main className={styles.main}>
-        <section className={styles.options + ' ' + 'border-2 border-grey hidden'}>
+        <section className={styles.options + ' ' + 'border-2 border-grey'}>
           配置区域
         </section>
         <section className={styles.uploadContainer + ' ' + 'border-2 border-dashed border-grey'} {...getRootProps()}>
@@ -79,10 +92,33 @@ export default function Home() {
               <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>松掉鼠标,我就开始上传啰</p> :
               <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>拖拽或点击上传</p>
           }
+
+          {
+            filepath ?
+              <ul className='absolute bottom-0 text-gray-400 w-full'>
+                <li className='flex justify-between w-full'>
+                  <p>{filepath}</p>
+                  <button onClick={handleFileRemove}>移除</button>
+                </li>
+              </ul>
+              : null
+          }
         </section>
 
         <section className={styles.results + ' border-2 border-grey'}>
-          {data ? data.text : <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>文本会处理到这里哟</p>}
+          <div className='relative h-[15%] bg-slate-100 text-left'>
+            {data ? data.text : <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>
+              {
+                isLoading ? 'isLoading' : 'values'
+              }
+            </p>
+            }
+          </div>
+          <div>
+            <span onClick={handleFileDownload}>
+              download files
+            </span>
+          </div>
         </section>
       </main>
     </div>

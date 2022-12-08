@@ -7,9 +7,9 @@
   padding: 4rem 0;
   padding-top: 10px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 200px 1fr;
-  grid-template-areas: "left-upload" "right-results";
+  grid-template-areas: "left-upload right-results" "top-option right-results";
   row-gap: 20px;
   column-gap: 20px;
   text-align: center;
