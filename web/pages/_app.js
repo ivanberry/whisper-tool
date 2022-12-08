@@ -6,9 +6,10 @@ function MyApp({ Component, pageProps: {
   ...pageProps
 } }) {
   return (
-    <SessionProvider>
+    <SessionProvider
+      session={session}
+      refetchInterval={5 * 60}>
       <Component {...pageProps} />
-
     </SessionProvider>
   )
 }

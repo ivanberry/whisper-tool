@@ -76,9 +76,9 @@ export default function Home() {
         </h1>
         {session ?
           <div className='flex justify-around items-center min-w-[200px]'>
-            <img className='rounded-full' width={30} height={30} src={session.user.image} alt="userImage" />
+            {/* <img className='rounded-full' width={30} height={30} src={session.user.image} alt="userImage" />
             <span className='m-2 p-1 border-[1px] border-solid border-slate-300'>{session.user.name}</span>
-            <span className='p-1 border-[1px] border-solid border-slate-300' onClick={handleLogout}>Logout</span>
+            <span className='p-1 border-[1px] border-solid border-slate-300' onClick={handleLogout}>Logout</span> */}
           </div>
           :
           <button onClick={handleClick}>Sign In</button>}
