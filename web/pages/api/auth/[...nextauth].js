@@ -13,6 +13,12 @@ export const authOptions = {
     async jwt({token}) {
       token.userRole = 'admin'
       return token
+    },
+    session: async ({ session, user, token }) => {
+      if (session?.user) {
+        session.user.id = user.id;
+      }
+      return session;
     }
   },
   debug: true
