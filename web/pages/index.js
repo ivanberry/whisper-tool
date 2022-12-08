@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useCallback, useEffect, useState } from 'react'
-import { signIn, signOut, useSession } from "next-auth/react"
+import { getSession, signIn, signOut, useSession } from "next-auth/react"
 
 import { useDropzone } from 'react-dropzone'
 
@@ -13,8 +13,10 @@ export default function Home() {
   const [filepath, setFilepath] = useState('')
   const { data: session, status } = useSession()
 
-  useEffect(() => {
-    console.log('status: ', status, data, session)
+  console.log('status: ', status, data, session)
+
+  useEffect(async () => {
+    console.log('status use effect: ', status, data, session, await getSession())
   }, [])
 
   const onDrop = useCallback(acceptedFiles => {
@@ -77,9 +79,9 @@ export default function Home() {
         </h1>
         {session ?
           <div className='flex justify-around items-center min-w-[200px]'>
-            {/* <img className='rounded-full' width={30} height={30} src={session.user.image} alt="userImage" />
+            <img className='rounded-full' width={30} height={30} src={session.user.image} alt="userImage" />
             <span className='m-2 p-1 border-[1px] border-solid border-slate-300'>{session.user.name}</span>
-            <span className='p-1 border-[1px] border-solid border-slate-300' onClick={handleLogout}>Logout</span> */}
+            <span className='p-1 border-[1px] border-solid border-slate-300' onClick={handleLogout}>Logout</span>
           </div>
           :
           <button onClick={handleClick}>Sign In</button>}
