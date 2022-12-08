@@ -5,7 +5,8 @@ export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: '480587013204-a66pebulat2g54kjnht783i6hmhkblen.apps.googleusercontent.com',
-      clientSecret: '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'
+      clientSecret: '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',
+      checks: 'none'
     })
   ],
   callbacks: {
@@ -14,6 +15,6 @@ export const authOptions = {
       return token
     }
   },
-  // debug: true
+  debug: true
 }
 export default NextAuth(authOptions)

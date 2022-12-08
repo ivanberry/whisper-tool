@@ -9,7 +9,7 @@ COPY . .
 RUN npm ci
 EXPOSE 3000
 
-CMD ["npm", "run" "build-prd"]
+CMD ["npm", "run", "build-prd"]
 
 #
 # FROM nginx as production
