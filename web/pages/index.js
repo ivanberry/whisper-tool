@@ -13,6 +13,8 @@ export default function Home() {
   const [filepath, setFilepath] = useState('')
   const { data: session, status } = useSession()
 
+  console.log('use session: ', session, status)
+
   const onDrop = useCallback(acceptedFiles => {
 
     acceptedFiles.forEach((file) => {
