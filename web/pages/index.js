@@ -13,13 +13,11 @@ export default function Home() {
   const [filepath, setFilepath] = useState('')
   const { data: session, status } = useSession()
 
-  console.log('use session: ', session, status)
-
   const onDrop = useCallback(acceptedFiles => {
 
+    setLoading(true)
     acceptedFiles.forEach((file) => {
       setFilepath(file.path)
-      setLoading(true)
       const formData = new FormData();
       formData.append('file', file)
       fetch('/p/api/transcribe', {
@@ -109,11 +107,14 @@ export default function Home() {
 
         <section className={styles.results + ' border-2 border-grey'}>
           <div className='relative h-[15%] bg-slate-100 text-left'>
-            {data ? data.text : <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>
-              {
-                isLoading ? 'isLoading' : 'values'
-              }
-            </p>
+            {isLoading ?
+              'isLoading' :
+              data ?
+                data.text :
+                <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'
+                }>
+                  转码结果
+                </p>
             }
           </div>
           <div>
