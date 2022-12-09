@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import { useCallback, useEffect, useState } from 'react'
 import { getSession, signIn, signOut, useSession } from "next-auth/react"
 
 import { useDropzone } from 'react-dropzone'
+import Config from '../components/Config'
 
 
 export default function Home() {
@@ -60,7 +60,7 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.container + ' text-center'}>
+    <div className={"container" + ' text-center'}>
       <Head>
         <title>Best transcibe audio to text</title>
         <meta name="description" content="Best transcibe audio to text" />
@@ -68,29 +68,29 @@ export default function Home() {
       </Head>
 
       <header className='flex justify-between items-center'>
-        <h1 className={styles.title + ' text-3xl'}>
+        <h1 className={"title" + ' text-3xl'}>
           新世代AI音频转化器
         </h1>
         {session ?
           <div className='flex justify-around items-center min-w-[200px]'>
-            <img className='rounded-full' width={30} height={30} src={session.user.image} alt="userImage" />
-            <span className='m-2 p-1 border-[1px] border-solid border-slate-300'>{session.user.name}</span>
-            <span className='p-1 border-[1px] border-solid border-slate-300' onClick={handleLogout}>Logout</span>
+            <img className='mask mask-heart' width={30} height={30} src={session.user.image} alt="userImage" />
+            <span className='btn btn-outline btn-sm btn-primary m-2'>{session.user.name}</span>
+            <span className='btn btn-outline btn-sm btn-secondary border-[1px] border-solid border-slate-300' onClick={handleLogout}>Logout</span>
           </div>
           :
           <button onClick={handleClick}>Sign In</button>}
       </header>
 
-      <main className={styles.main}>
-        <section className={styles.options + ' ' + 'border-2 border-grey'}>
-          配置区域
-        </section>
-        <section className={styles.uploadContainer + ' ' + 'border-2 border-dashed border-grey'} {...getRootProps()}>
+      <main className={"main"}>
+
+        <Config />
+
+        <section className={"uploadContainer" + ' ' + 'border-2 border-dashed border-grey'} {...getRootProps()}>
           <input {...getInputProps()} />
           {
             isDragActive ?
-              <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>松掉鼠标,我就开始上传啰</p> :
-              <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'}>拖拽或点击上传</p>
+              <p className={"absoluteCenter" + ' text-xl italic text-slate-300'}>松掉鼠标,我就开始上传啰</p> :
+              <p className={"absoluteCenter" + ' text-xl italic text-slate-300'}>拖拽或点击上传</p>
           }
 
           {
@@ -103,15 +103,16 @@ export default function Home() {
               </ul>
               : null
           }
+          <progress className="progress progress-accent w-full" value="30" max="100"></progress>
         </section>
 
-        <section className={styles.results + ' border-2 border-grey'}>
+        <section className={"results" + ' border-2 border-grey'}>
           <div className='relative h-[15%] bg-slate-100 text-left'>
             {isLoading ?
               'isLoading' :
               data ?
                 data.text :
-                <p className={styles.absoluteCenter + ' text-xl italic text-slate-300'
+                <p className={"absoluteCenter" + ' text-xl italic text-slate-300'
                 }>
                   转码结果
                 </p>
@@ -119,7 +120,7 @@ export default function Home() {
           </div>
           <div>
             <span onClick={handleFileDownload}>
-              download files
+              下载
             </span>
           </div>
         </section>
