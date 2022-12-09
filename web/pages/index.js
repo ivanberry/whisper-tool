@@ -13,12 +13,6 @@ export default function Home() {
   const [filepath, setFilepath] = useState('')
   const { data: session, status } = useSession()
 
-  console.log('status: ', status, data, session)
-
-  useEffect(async () => {
-    console.log('status use effect: ', status, data, session, await getSession())
-  }, [])
-
   const onDrop = useCallback(acceptedFiles => {
 
     acceptedFiles.forEach((file) => {
