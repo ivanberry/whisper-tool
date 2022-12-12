@@ -13,6 +13,7 @@
     "daisyui": "^2.42.1",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.6",
+    "formidable": "^3.2.5",
     "next": "13.0.6",
     "next-auth": "^4.18.1",
     "react": "18.2.0",

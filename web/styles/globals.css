@@ -39,7 +39,7 @@ a {
 }
 
 .main {
-  min-height: calc(100vh - 60px);
+  max-height: 800px;
   padding: 4rem 0;
   padding-top: 10px;
   display: grid;

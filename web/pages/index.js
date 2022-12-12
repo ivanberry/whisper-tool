@@ -19,7 +19,7 @@ export default function Home() {
       formData.append("file", file);
       fetch("/api/query", {
         method: "POST",
-        body: file,
+        body: formData,
       })
         .then((res) => res.json())
         .then((data) => {
