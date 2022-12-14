@@ -1,16 +1,6 @@
 const fs = require("fs");
-const path = require("path");
 
-const Minio = require('minio')
 import formidable, { errors as formidableErrors } from 'formidable';
-
-var minioClient = new Minio.Client({
-  endPoint: 'localhost',
-  port: 9000,
-  useSSL: false,
-  accessKey: process.env.NEXTAUTH_MINIO_ID,
-  secretKey: process.env.NEXTAUTH_MINIO_SECRET
-});
 
 export const config = {
   api: {
