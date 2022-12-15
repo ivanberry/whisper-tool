@@ -11,6 +11,18 @@ export default function Home() {
   const [filepath, setFilepath] = useState("");
   const { data: session, status } = useSession();
 
+  const [needTranslate, setNeedTranslate] = useState(false);
+  const [needToImg, setNeedToImg] = useState(false);
+
+  const handleChange = (type) => {
+    // handle the Config component state change
+    if (type === "TRANSLATE") {
+      setNeedTranslate((n) => !n);
+    } else {
+      setNeedToImg((n) => !n);
+    }
+  };
+
   const onDrop = useCallback((acceptedFiles) => {
     setLoading(true);
     acceptedFiles.forEach((file) => {
@@ -91,7 +103,11 @@ export default function Home() {
       </header>
 
       <main className={"main"}>
-        <Config />
+        <Config
+          needToImg={needToImg}
+          needTranslate={needTranslate}
+          handleChange={handleChange}
+        />
 
         <section
           className={
