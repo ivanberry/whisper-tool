@@ -8,6 +8,16 @@ export const config = {
   },
 };
 
+function getData(audioFile, callback) {
+  var reader = new FileReader();
+  reader.onload = function (event) {
+    var data = event.target.result.split(","),
+      decodedImageData = btoa(data[1]); // the actual conversion of data from binary to base64 format
+    callback(decodedImageData);
+  };
+  reader.readAsDataURL(audioFile);
+}
+
 export default async function handler(req, res) {
   // 1. check session
   // 2. check JWT value -> map to someone
@@ -26,7 +36,7 @@ export default async function handler(req, res) {
           audio: files.file[0],
           translate: translate[0] === "false" ? false : true,
         });
-        res.status(200).json({ success: true, data });
+        res.status(201).json(data);
       } catch (err) {
         console.log("errors: ", err);
         res.status(500).json({ success: false, error: err });
@@ -36,7 +46,11 @@ export default async function handler(req, res) {
 }
 
 async function query(data) {
+  // files.file[0] using formidable
   const { audio, translate } = data;
+
+  console.log("path:", fs.readFileSync(audio.filepath, { encoding: "base64" }));
+
   const response = await fetch("https://api.replicate.com/v1/predictions", {
     headers: {
       Authorization: "Token " + process.env.REPLICATE_API_TOKEN,
@@ -47,7 +61,9 @@ async function query(data) {
       version:
         "23241e5731b44fcb5de68da8ebddae1ad97c5094d24f94ccb11f7c1d33d661e2",
       input: {
-        audio,
+        audio:
+          "data:audio/m4a;base64," +
+          fs.readFileSync(audio.filepath, { encoding: "base64" }),
         translate,
       },
     }),

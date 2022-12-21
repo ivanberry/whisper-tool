@@ -5,6 +5,8 @@ import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { useDropzone } from "react-dropzone";
 import Config from "../components/Config";
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 export default function Home() {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
@@ -25,19 +27,48 @@ export default function Home() {
 
   const onDrop = useCallback((acceptedFiles) => {
     setLoading(true);
-    acceptedFiles.forEach((file) => {
+    acceptedFiles.forEach(async (file) => {
       setFilepath(file.path);
       const formData = new FormData();
       formData.append("file", file);
-      fetch("/api/query", {
+      formData.append("translate", needTranslate);
+      formData.append("toImage", needToImg);
+      const response = await fetch("/api/predictions", {
         method: "POST",
         body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data?.data);
-          setLoading(false);
-        });
+      });
+
+      let prediction = await response.json();
+
+      if (response.status !== 201) {
+        // pass
+        console.log(prediction.detail);
+        return;
+      }
+
+      console.log("prediction: ", prediction);
+
+      while (
+        prediction.status !== "successed" &&
+        prediction.status !== "failed"
+      ) {
+        await sleep(1000);
+        const response = await fetch("/api/predictions/" + prediction?.id);
+        prediction = await response.json();
+        if (response.status !== 200) {
+          // pass
+          console.log(prediction.detail);
+          return;
+        }
+
+        console.log("prediction: ", prediction);
+      }
+
+      // .then((res) => res.json())
+      //         .then((data) => {
+      //           setData(data?.data);
+      //           setLoading(false);
+      //         });
     });
   }, []);
 
