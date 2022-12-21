@@ -1,5 +1,7 @@
-# 安装whisper
+# 安装 whisper
 
 ```bash
-pip install git+https://github.com/openai/whisper.git 
+pip install git+https://github.com/openai/whisper.git
 ```
+
+# RUN

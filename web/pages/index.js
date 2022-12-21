@@ -41,40 +41,36 @@ export default function Home() {
       let prediction = await response.json();
 
       if (response.status !== 201) {
-        // pass
-        console.log(prediction.detail);
+        // 创建任务失败
         return;
       }
 
-      console.log("prediction: ", prediction);
-
       while (
-        prediction.status !== "successed" &&
+        prediction.status !== "succeeded" ||
         prediction.status !== "failed"
       ) {
+        // 非任务结束重试机制,可以加入最大尝试次数
         await sleep(1000);
         const response = await fetch("/api/predictions/" + prediction?.id);
         prediction = await response.json();
-        if (response.status !== 200) {
-          // pass
-          console.log(prediction.detail);
+        if (prediction.status === "succeeded") {
+          console.log("prediction: ", prediction);
+          setLoading(false);
+          const { output } = prediction;
+          setData(output.transcription);
+
+          // 结束轮训任务
           return;
+        } else {
+          console.log("prediction: ", prediction);
         }
-
-        console.log("prediction: ", prediction);
       }
-
-      // .then((res) => res.json())
-      //         .then((data) => {
-      //           setData(data?.data);
-      //           setLoading(false);
-      //         });
     });
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    // accept: ['audio/m4a'],
+    // accept: ["audio/m4a"],
     maxFiles: 1,
     maxSize: 16 * 1000 * 1000,
   });
@@ -177,7 +173,7 @@ export default function Home() {
             {isLoading ? (
               "isLoading"
             ) : data ? (
-              data.text
+              data
             ) : (
               <p
                 className={"absoluteCenter" + " text-xl italic text-slate-300"}
