@@ -98,8 +98,8 @@ export default function Home() {
   return (
     <div className={"container" + " text-center"}>
       <Head>
-        <title>Best transcibe audio to text</title>
-        <meta name="description" content="Best transcibe audio to text" />
+        <title>Best transcribe audio to text</title>
+        <meta name="description" content="Best transcribe audio to text" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
